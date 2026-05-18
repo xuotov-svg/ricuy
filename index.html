@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Рисовалка</title>
 
-  <!-- iOS мета-теги для иконки на домашнем экране -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Рисовалка">
@@ -21,8 +20,9 @@
       -webkit-user-select: none;
       user-select: none;
     }
+
     body {
-      background: #0b0c0e;
+      background: #0a0a10;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -34,10 +34,12 @@
       width: 100%;
       height: 100%;
     }
+
+    /* ---------- LAUNCHER ---------- */
     .launcher {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 30% 30%, #1a1e29, #030406);
+      background: radial-gradient(circle at 40% 35%, #1e1b3a, #030306);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -46,51 +48,68 @@
       transition: opacity 0.8s, visibility 0.8s;
       padding: 20px;
     }
+    .launcher::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.03"><circle cx="20" cy="30" r="12" fill="white"/><circle cx="75" cy="65" r="18" fill="white"/><circle cx="50" cy="15" r="6" fill="white"/></svg>') repeat;
+      pointer-events: none;
+    }
     .launcher.hidden {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
     .launcher h1 {
-      font-size: clamp(2.5rem, 12vw, 6rem);
+      font-size: clamp(3rem, 13vw, 7rem);
       font-weight: 900;
-      background: linear-gradient(135deg, #ff6ec7, #7b2fff, #00e5ff);
+      background: linear-gradient(135deg, #ff6ec7, #8b5cf6, #00e5ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      filter: drop-shadow(0 0 30px #7b2fff88);
-      letter-spacing: 2px;
-      margin-bottom: 2rem;
+      filter: drop-shadow(0 0 40px #8b5cf6aa);
+      letter-spacing: 3px;
+      margin-bottom: 2.5rem;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
     .launcher button {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #eee;
-      font-size: 1.4rem;
+      background: rgba(20, 18, 40, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #f0e6ff;
+      font-size: 1.5rem;
       font-weight: 600;
-      padding: 1rem 3rem;
+      padding: 1rem 3.5rem;
       border-radius: 60px;
       cursor: pointer;
-      box-shadow: 0 0 30px #7b2fff66;
-      transition: 0.3s;
-      letter-spacing: 1px;
+      box-shadow: 0 0 35px #8b5cf688;
+      transition: all 0.3s ease;
+      letter-spacing: 1.5px;
       background: linear-gradient(135deg, #2a1f4c, #141124);
-      min-height: 56px;
+      min-height: 60px;
+      position: relative;
+      z-index: 1;
     }
-    .launcher button:active {
-      box-shadow: 0 0 50px #ff6ec7aa;
+    .launcher button:hover {
+      box-shadow: 0 0 60px #ff6ec7cc;
       border-color: #ff6ec7;
       transform: scale(1.05);
     }
+    .launcher button:active {
+      box-shadow: 0 0 70px #ff6ec7;
+      transform: scale(0.98);
+    }
+
+    /* ---------- APP ---------- */
     .app {
       display: none;
       width: 100vw;
       height: 100vh;
       height: 100dvh;
       flex-direction: column;
-      background: #12131c;
+      background: #0e0e16;
       position: fixed;
       top: 0;
       left: 0;
@@ -98,73 +117,188 @@
     .app.active {
       display: flex;
     }
+
+    /* ---------- TOOLBAR ---------- */
     .toolbar {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      padding: 6px 8px;
-      background: rgba(15, 16, 25, 0.95);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid #2e2e4a;
+      padding: 6px 10px;
+      background: rgba(12, 13, 22, 0.8);
+      backdrop-filter: blur(25px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       align-items: center;
       z-index: 20;
-      min-height: auto;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
     }
     .tool-group {
       display: flex;
-      gap: 3px;
+      gap: 4px;
       align-items: center;
-      background: #1e1f2e;
-      padding: 3px 6px;
+      background: rgba(25, 26, 42, 0.7);
+      backdrop-filter: blur(12px);
+      padding: 4px 8px;
       border-radius: 30px;
       flex-wrap: wrap;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
-    button, select, input {
+    button,
+    select,
+    input {
       background: transparent;
       border: none;
       color: #cdd6f4;
-      font-size: 0.75rem;
-      padding: 6px 9px;
+      font-size: 0.7rem;
+      padding: 6px 10px;
       border-radius: 30px;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 3px;
-      transition: 0.2s;
+      transition: all 0.2s;
       font-weight: 500;
       white-space: nowrap;
-      min-height: 34px;
+      min-height: 32px;
       -webkit-appearance: none;
+      font-family: inherit;
+      letter-spacing: 0.3px;
     }
-    button:active, select:active {
-      background: #313256;
+    button:hover,
+    select:hover {
+      background: rgba(120, 100, 210, 0.3);
       color: white;
+      box-shadow: 0 0 15px rgba(140, 100, 255, 0.5);
+    }
+    button:active {
+      background: #7b2fff;
+      color: white;
+      box-shadow: 0 0 18px #7b2fffcc;
     }
     .active-tool {
       background: #7b2fff !important;
-      box-shadow: 0 0 12px #7b2fffcc;
-      color: white;
+      box-shadow: 0 0 20px #7b2fffcc !important;
+      color: white !important;
+      font-weight: 600;
     }
     input[type="color"] {
-      width: 32px;
+      width: 30px;
       height: 30px;
       padding: 2px;
-      border-radius: 20px;
-      background: #27283c;
-      border: 1px solid #4f4f7a;
+      border-radius: 50%;
+      background: #1e1f2e;
+      border: 1px solid rgba(255, 255, 255, 0.25);
       min-height: auto;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    input[type="color"]:hover {
+      box-shadow: 0 0 15px rgba(200, 160, 255, 0.7);
     }
     input[type="range"] {
-      width: 55px;
+      width: 50px;
       accent-color: #c084fc;
       padding: 0;
       min-height: auto;
+      cursor: pointer;
     }
+    .zoom-info {
+      color: #9aa5ce;
+      font-size: 0.7rem;
+      margin: 0 3px;
+      min-width: 38px;
+      text-align: center;
+    }
+    .size-value {
+      color: #cdd6f4;
+      font-size: 0.7rem;
+      min-width: 32px;
+      text-align: center;
+    }
+
+    /* ---------- LAYERS DROPDOWN ---------- */
+    .layers-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .layers-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: rgba(20, 21, 35, 0.96);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(200, 180, 255, 0.3);
+      border-radius: 18px;
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 7px;
+      z-index: 50;
+      min-width: 190px;
+      max-height: 280px;
+      overflow-y: auto;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(120, 80, 255, 0.4);
+    }
+    .layers-dropdown.show {
+      display: flex;
+    }
+    .layer-actions {
+      display: flex;
+      gap: 5px;
+      justify-content: space-between;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .layer-actions button {
+      font-size: 0.65rem;
+      padding: 4px 8px;
+      min-height: auto;
+      background: rgba(40, 42, 60, 0.8);
+      border-radius: 20px;
+      flex: 1;
+      text-align: center;
+      justify-content: center;
+    }
+    .layer-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 10px;
+      background: rgba(35, 37, 55, 0.9);
+      border-radius: 20px;
+      color: #cdd6f4;
+      font-size: 0.7rem;
+      cursor: pointer;
+      border: 2px solid transparent;
+      gap: 6px;
+      transition: 0.2s;
+    }
+    .layer-item.active {
+      border-color: #7b2fff;
+      box-shadow: 0 0 18px #7b2fff88;
+    }
+    .layer-item button {
+      padding: 2px 6px;
+      font-size: 0.65rem;
+      background: rgba(80, 60, 130, 0.7);
+      min-height: auto;
+      border-radius: 14px;
+    }
+    .layer-opacity {
+      width: 50px;
+      accent-color: #7b2fff;
+    }
+
+    /* ---------- CANVAS ---------- */
     .canvas-container {
       flex: 1;
       position: relative;
       overflow: hidden;
-      background: #1a1b26;
+      background: #13141f;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -175,752 +309,663 @@
       cursor: crosshair;
       image-rendering: auto;
       touch-action: none;
+      filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
     }
-    .color-palette {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-      flex-wrap: wrap;
+
+    /* ---------- SCROLLBAR ---------- */
+    .layers-dropdown::-webkit-scrollbar {
+      width: 4px;
     }
-    .preset-color {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: 0.2s;
-      flex-shrink: 0;
+    .layers-dropdown::-webkit-scrollbar-track {
+      background: transparent;
     }
-    .preset-color:active {
-      border-color: white;
-      transform: scale(1.15);
+    .layers-dropdown::-webkit-scrollbar-thumb {
+      background: #7b2fff;
+      border-radius: 10px;
     }
-    .zoom-info {
-      color: #9aa5ce;
-      font-size: 0.75rem;
-      margin: 0 4px;
-    }
-    .layers-wrapper {
-      position: relative;
-      display: inline-block;
-    }
-    .layers-dropdown {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      margin-top: 6px;
-      background: rgba(20, 21, 35, 0.96);
-      backdrop-filter: blur(16px);
-      border: 1px solid #3a3b5c;
-      border-radius: 16px;
-      padding: 8px;
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      z-index: 50;
-      min-width: 180px;
-      max-height: 260px;
-      overflow-y: auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-    }
-    .layers-dropdown.show {
-      display: flex;
-    }
-    .layer-actions {
-      display: flex;
-      gap: 4px;
-      justify-content: space-between;
-      padding-bottom: 4px;
-      border-bottom: 1px solid #3a3b5c;
-    }
-    .layer-actions button {
-      font-size: 0.7rem;
-      padding: 4px 8px;
-      min-height: auto;
-      background: #2a2b40;
-      border-radius: 20px;
-      flex: 1;
-    }
-    .layer-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 5px 8px;
-      background: #2a2b40;
-      border-radius: 20px;
-      color: #cdd6f4;
-      font-size: 0.75rem;
-      cursor: pointer;
-      border: 2px solid transparent;
-      gap: 4px;
-    }
-    .layer-item.active {
-      border-color: #7b2fff;
-      box-shadow: 0 0 10px #7b2fff66;
-    }
-    .layer-item button {
-      padding: 2px 6px;
-      font-size: 0.7rem;
-      background: #4a3b6e;
-      min-height: auto;
-    }
-    .layer-opacity {
-      width: 50px;
-      accent-color: #7b2fff;
+
+    /* ---------- MOBILE FINE-TUNE ---------- */
+    @media (max-width: 700px) {
+      button,
+      select,
+      input {
+        font-size: 0.65rem;
+        padding: 5px 8px;
+        min-height: 28px;
+      }
+      .toolbar {
+        padding: 5px 6px;
+        gap: 4px;
+      }
     }
   </style>
 </head>
 <body>
-<div class="launcher" id="launcher">
-  <h1>РИСОВАЛКА</h1>
-  <button id="startBtn">НАЧАТЬ РИСОВАТЬ</button>
-</div>
+  <div class="launcher" id="launcher">
+    <h1>РИСОВАЛКА</h1>
+    <button id="startBtn">НАЧАТЬ РИСОВАТЬ</button>
+  </div>
 
-<div class="app" id="app">
-  <div class="toolbar">
-    <div class="tool-group">
-      <button id="brushBtn" class="active-tool">Кисть</button>
-      <button id="neonBrushBtn">Неон</button>
-      <button id="pencilBtn">Карандаш</button>
-      <button id="sprayBtn">Распыл.</button>
-      <button id="eraserBtn">Ластик</button>
-      <button id="fillBtn">Заливка</button>
-      <button id="eyedropperBtn">Пипетка</button>
-    </div>
-    <div class="tool-group">
-      <input type="color" id="colorPicker" value="#ff6ec7">
-      <div class="color-palette" id="colorPalette"></div>
-      <input type="range" id="sizeSlider" min="1" max="60" value="10">
-      <span id="sizeValue" style="color:#cdd6f4;">10px</span>
-    </div>
-    <div class="tool-group">
-      <select id="blendMode">
-        <option value="normal">Обычный</option>
-        <option value="multiply">Умножение</option>
-        <option value="screen">Осветление</option>
-        <option value="overlay">Перекрытие</option>
-        <option value="soft-light">Мягкий свет</option>
-        <option value="color-burn">Затемнение</option>
-        <option value="color-dodge">Осветл. основы</option>
-      </select>
-      <button id="undoBtn">↩</button>
-      <button id="redoBtn">↪</button>
-      <div class="layers-wrapper">
-        <button id="layersToggleBtn">📑 Слои</button>
-        <div class="layers-dropdown" id="layersDropdown"></div>
+  <div class="app" id="app">
+    <div class="toolbar">
+      <div class="tool-group">
+        <button id="brushBtn" class="active-tool">Кисть</button>
+        <button id="neonBrushBtn">Неон</button>
+        <button id="pencilBtn">Карандаш</button>
+        <button id="sprayBtn">Распыл.</button>
+        <button id="eraserBtn">Ластик</button>
+        <button id="fillBtn">Заливка</button>
+        <button id="eyedropperBtn">Пипетка</button>
+      </div>
+      <div class="tool-group">
+        <input type="color" id="colorPicker" value="#ff6ec7">
+        <input type="range" id="sizeSlider" min="1" max="60" value="10">
+        <span class="size-value" id="sizeValue">10px</span>
+      </div>
+      <div class="tool-group">
+        <select id="blendMode">
+          <option value="normal">Обычный</option>
+          <option value="multiply">Умножение</option>
+          <option value="screen">Осветление</option>
+          <option value="overlay">Перекрытие</option>
+          <option value="soft-light">Мягкий свет</option>
+          <option value="color-burn">Затемнение</option>
+          <option value="color-dodge">Осветл. основы</option>
+        </select>
+        <button id="undoBtn">↩</button>
+        <button id="redoBtn">↪</button>
+        <div class="layers-wrapper">
+          <button id="layersToggleBtn">Слои</button>
+          <div class="layers-dropdown" id="layersDropdown"></div>
+        </div>
+      </div>
+      <div class="tool-group">
+        <button id="zoomInBtn">+</button>
+        <span class="zoom-info" id="zoomLevel">100%</span>
+        <button id="zoomOutBtn">–</button>
+        <button id="zoomResetBtn">Сброс</button>
+        <button id="downloadBtn">Экспорт</button>
+        <button id="loadImageBtn">Открыть</button>
+        <button id="newCanvasBtn">Новый</button>
       </div>
     </div>
-    <div class="tool-group">
-      <button id="zoomInBtn">+</button>
-      <span class="zoom-info" id="zoomLevel">100%</span>
-      <button id="zoomOutBtn">-</button>
-      <button id="zoomResetBtn">Сброс</button>
-      <button id="downloadBtn">💾</button>
-      <button id="loadImageBtn">📷</button>
-      <button id="newCanvasBtn">🆕</button>
+    <div class="canvas-container" id="canvasContainer">
+      <canvas id="canvas"></canvas>
     </div>
   </div>
-  <div class="canvas-container" id="canvasContainer">
-    <canvas id="canvas"></canvas>
-  </div>
-</div>
 
-<input type="file" id="imageLoader" accept="image/*" style="display:none;">
+  <input type="file" id="imageLoader" accept="image/*" style="display:none;">
 
-<script>
-  (function() {
-    const launcher = document.getElementById('launcher');
-    const app = document.getElementById('app');
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-    const container = document.getElementById('canvasContainer');
+  <script>
+    (function() {
+      const launcher = document.getElementById('launcher');
+      const app = document.getElementById('app');
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      const container = document.getElementById('canvasContainer');
 
-    let drawing = false;
-    let currentTool = 'brush';
-    let currentColor = '#ff6ec7';
-    let lineWidth = 10;
-    let globalCompositeOp = 'normal';
-    let points = [];
+      let drawing = false;
+      let currentTool = 'brush';
+      let currentColor = '#ff6ec7';
+      let lineWidth = 10;
+      let globalCompositeOp = 'normal';
+      let points = [];
 
-    let layers = [];
-    let activeLayerIndex = 0;
-    let zoom = 1;
-    let panX = 0, panY = 0;
-    let canvasDrawWidth = 800;
-    let canvasDrawHeight = 600;
+      let layers = [];
+      let activeLayerIndex = 0;
+      let zoom = 1;
+      let panX = 0, panY = 0;
+      let canvasDrawWidth = 800;
+      let canvasDrawHeight = 600;
 
-    let undoStack = [];
-    let redoStack = [];
-    const MAX_UNDO = 50;
+      let undoStack = [];
+      let redoStack = [];
+      const MAX_UNDO = 50;
 
-    const PRESET_COLORS = [
-      '#ff6ec7', '#7b2fff', '#00e5ff', '#ff4444', '#ff8800',
-      '#ffdd00', '#44ff44', '#ffffff', '#aaaaaa', '#555555',
-      '#000000', '#8b4513', '#ff69b4', '#00ff88', '#4488ff'
-    ];
+      const brushBtn = document.getElementById('brushBtn');
+      const neonBrushBtn = document.getElementById('neonBrushBtn');
+      const pencilBtn = document.getElementById('pencilBtn');
+      const sprayBtn = document.getElementById('sprayBtn');
+      const eraserBtn = document.getElementById('eraserBtn');
+      const fillBtn = document.getElementById('fillBtn');
+      const eyedropperBtn = document.getElementById('eyedropperBtn');
+      const undoBtn = document.getElementById('undoBtn');
+      const redoBtn = document.getElementById('redoBtn');
+      const colorPicker = document.getElementById('colorPicker');
+      const sizeSlider = document.getElementById('sizeSlider');
+      const sizeValue = document.getElementById('sizeValue');
+      const blendSelect = document.getElementById('blendMode');
+      const layersToggleBtn = document.getElementById('layersToggleBtn');
+      const layersDropdown = document.getElementById('layersDropdown');
+      const layersWrapper = document.querySelector('.layers-wrapper');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const loadImageBtn = document.getElementById('loadImageBtn');
+      const imageLoader = document.getElementById('imageLoader');
+      const newCanvasBtn = document.getElementById('newCanvasBtn');
+      const zoomInBtn = document.getElementById('zoomInBtn');
+      const zoomOutBtn = document.getElementById('zoomOutBtn');
+      const zoomResetBtn = document.getElementById('zoomResetBtn');
+      const zoomLevelSpan = document.getElementById('zoomLevel');
 
-    const brushBtn = document.getElementById('brushBtn');
-    const neonBrushBtn = document.getElementById('neonBrushBtn');
-    const pencilBtn = document.getElementById('pencilBtn');
-    const sprayBtn = document.getElementById('sprayBtn');
-    const eraserBtn = document.getElementById('eraserBtn');
-    const fillBtn = document.getElementById('fillBtn');
-    const eyedropperBtn = document.getElementById('eyedropperBtn');
-    const undoBtn = document.getElementById('undoBtn');
-    const redoBtn = document.getElementById('redoBtn');
-    const colorPicker = document.getElementById('colorPicker');
-    const sizeSlider = document.getElementById('sizeSlider');
-    const sizeValue = document.getElementById('sizeValue');
-    const blendSelect = document.getElementById('blendMode');
-    const layersToggleBtn = document.getElementById('layersToggleBtn');
-    const layersDropdown = document.getElementById('layersDropdown');
-    const layersWrapper = document.querySelector('.layers-wrapper');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const loadImageBtn = document.getElementById('loadImageBtn');
-    const imageLoader = document.getElementById('imageLoader');
-    const newCanvasBtn = document.getElementById('newCanvasBtn');
-    const zoomInBtn = document.getElementById('zoomInBtn');
-    const zoomOutBtn = document.getElementById('zoomOutBtn');
-    const zoomResetBtn = document.getElementById('zoomResetBtn');
-    const zoomLevelSpan = document.getElementById('zoomLevel');
-    const colorPaletteDiv = document.getElementById('colorPalette');
+      function initLayers() {
+        const baseCanvas = document.createElement('canvas');
+        baseCanvas.width = canvasDrawWidth;
+        baseCanvas.height = canvasDrawHeight;
+        const baseCtx = baseCanvas.getContext('2d');
+        baseCtx.fillStyle = '#ffffff';
+        baseCtx.fillRect(0, 0, baseCanvas.width, baseCanvas.height);
+        layers = [{ canvas: baseCanvas, visible: true, opacity: 1 }];
+        activeLayerIndex = 0;
+        undoStack = [];
+        redoStack = [];
+        saveUndoState();
+        renderLayersPanel();
+      }
 
-    function initColorPalette() {
-      colorPaletteDiv.innerHTML = '';
-      PRESET_COLORS.forEach(color => {
-        const dot = document.createElement('div');
-        dot.className = 'preset-color';
-        dot.style.backgroundColor = color;
-        dot.addEventListener('click', (e) => {
-          e.preventDefault();
-          currentColor = color;
-          colorPicker.value = color;
+      function saveUndoState() {
+        const activeCanvas = layers[activeLayerIndex]?.canvas;
+        if (!activeCanvas) return;
+        const snapshot = document.createElement('canvas');
+        snapshot.width = activeCanvas.width;
+        snapshot.height = activeCanvas.height;
+        const snapCtx = snapshot.getContext('2d');
+        snapCtx.drawImage(activeCanvas, 0, 0);
+        undoStack.push({ canvas: snapshot, layerIndex: activeLayerIndex });
+        if (undoStack.length > MAX_UNDO) undoStack.shift();
+        redoStack = [];
+      }
+
+      function undo() {
+        if (undoStack.length === 0) return;
+        const activeCanvas = layers[activeLayerIndex]?.canvas;
+        if (!activeCanvas) return;
+        const currentSnapshot = document.createElement('canvas');
+        currentSnapshot.width = activeCanvas.width;
+        currentSnapshot.height = activeCanvas.height;
+        const snapCtx = currentSnapshot.getContext('2d');
+        snapCtx.drawImage(activeCanvas, 0, 0);
+        redoStack.push({ canvas: currentSnapshot, layerIndex: activeLayerIndex });
+
+        const last = undoStack.pop();
+        if (last && layers[last.layerIndex]) {
+          const layerCanvas = layers[last.layerIndex].canvas;
+          const layerCtx = layerCanvas.getContext('2d');
+          layerCtx.clearRect(0, 0, layerCanvas.width, layerCanvas.height);
+          layerCtx.drawImage(last.canvas, 0, 0);
+          composeAndRender();
+        }
+      }
+
+      function redo() {
+        if (redoStack.length === 0) return;
+        const activeCanvas = layers[activeLayerIndex]?.canvas;
+        if (!activeCanvas) return;
+        const currentSnapshot = document.createElement('canvas');
+        currentSnapshot.width = activeCanvas.width;
+        currentSnapshot.height = activeCanvas.height;
+        const snapCtx = currentSnapshot.getContext('2d');
+        snapCtx.drawImage(activeCanvas, 0, 0);
+        undoStack.push({ canvas: currentSnapshot, layerIndex: activeLayerIndex });
+
+        const next = redoStack.pop();
+        if (next && layers[next.layerIndex]) {
+          const layerCanvas = layers[next.layerIndex].canvas;
+          const layerCtx = layerCanvas.getContext('2d');
+          layerCtx.clearRect(0, 0, layerCanvas.width, layerCanvas.height);
+          layerCtx.drawImage(next.canvas, 0, 0);
+          composeAndRender();
+        }
+      }
+
+      function getCompositeImage() {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvasDrawWidth;
+        tempCanvas.height = canvasDrawHeight;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.fillStyle = '#ffffff';
+        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+        layers.forEach(layer => {
+          if (layer.visible) {
+            tempCtx.globalAlpha = layer.opacity || 1;
+            tempCtx.drawImage(layer.canvas, 0, 0);
+            tempCtx.globalAlpha = 1;
+          }
         });
-        colorPaletteDiv.appendChild(dot);
-      });
-    }
-
-    function initLayers() {
-      const baseCanvas = document.createElement('canvas');
-      baseCanvas.width = canvasDrawWidth;
-      baseCanvas.height = canvasDrawHeight;
-      const baseCtx = baseCanvas.getContext('2d');
-      baseCtx.fillStyle = '#ffffff';
-      baseCtx.fillRect(0, 0, baseCanvas.width, baseCanvas.height);
-      layers = [{ canvas: baseCanvas, visible: true, opacity: 1 }];
-      activeLayerIndex = 0;
-      undoStack = [];
-      redoStack = [];
-      saveUndoState();
-      renderLayersPanel();
-    }
-
-    function saveUndoState() {
-      const activeCanvas = layers[activeLayerIndex]?.canvas;
-      if (!activeCanvas) return;
-      const snapshot = document.createElement('canvas');
-      snapshot.width = activeCanvas.width;
-      snapshot.height = activeCanvas.height;
-      const snapCtx = snapshot.getContext('2d');
-      snapCtx.drawImage(activeCanvas, 0, 0);
-      undoStack.push({ canvas: snapshot, layerIndex: activeLayerIndex });
-      if (undoStack.length > MAX_UNDO) undoStack.shift();
-      redoStack = [];
-    }
-
-    function undo() {
-      if (undoStack.length === 0) return;
-      const activeCanvas = layers[activeLayerIndex]?.canvas;
-      if (!activeCanvas) return;
-      const currentSnapshot = document.createElement('canvas');
-      currentSnapshot.width = activeCanvas.width;
-      currentSnapshot.height = activeCanvas.height;
-      const snapCtx = currentSnapshot.getContext('2d');
-      snapCtx.drawImage(activeCanvas, 0, 0);
-      redoStack.push({ canvas: currentSnapshot, layerIndex: activeLayerIndex });
-
-      const last = undoStack.pop();
-      if (last && layers[last.layerIndex]) {
-        const layerCanvas = layers[last.layerIndex].canvas;
-        const layerCtx = layerCanvas.getContext('2d');
-        layerCtx.clearRect(0, 0, layerCanvas.width, layerCanvas.height);
-        layerCtx.drawImage(last.canvas, 0, 0);
-        composeAndRender();
+        return tempCanvas;
       }
-    }
 
-    function redo() {
-      if (redoStack.length === 0) return;
-      const activeCanvas = layers[activeLayerIndex]?.canvas;
-      if (!activeCanvas) return;
-      const currentSnapshot = document.createElement('canvas');
-      currentSnapshot.width = activeCanvas.width;
-      currentSnapshot.height = activeCanvas.height;
-      const snapCtx = currentSnapshot.getContext('2d');
-      snapCtx.drawImage(activeCanvas, 0, 0);
-      undoStack.push({ canvas: currentSnapshot, layerIndex: activeLayerIndex });
-
-      const next = redoStack.pop();
-      if (next && layers[next.layerIndex]) {
-        const layerCanvas = layers[next.layerIndex].canvas;
-        const layerCtx = layerCanvas.getContext('2d');
-        layerCtx.clearRect(0, 0, layerCanvas.width, layerCanvas.height);
-        layerCtx.drawImage(next.canvas, 0, 0);
-        composeAndRender();
+      function composeAndRender() {
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+        const composite = getCompositeImage();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(panX, panY);
+        ctx.scale(zoom, zoom);
+        ctx.drawImage(composite, 0, 0);
+        ctx.restore();
       }
-    }
 
-    function getCompositeImage() {
-      const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = canvasDrawWidth;
-      tempCanvas.height = canvasDrawHeight;
-      const tempCtx = tempCanvas.getContext('2d');
-      tempCtx.fillStyle = '#ffffff';
-      tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-      layers.forEach(layer => {
-        if (layer.visible) {
-          tempCtx.globalAlpha = layer.opacity || 1;
-          tempCtx.drawImage(layer.canvas, 0, 0);
-          tempCtx.globalAlpha = 1;
+      function downloadImage() {
+        const composite = getCompositeImage();
+        const dataUrl = composite.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.download = 'рисунок_' + new Date().toISOString().slice(0,19).replace(/:/g, '-') + '.png';
+        link.href = dataUrl;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function floodFill(startX, startY, fillColor) {
+        const layerCanvas = layers[activeLayerIndex].canvas;
+        const layerCtx = layerCanvas.getContext('2d');
+        const imageData = layerCtx.getImageData(0, 0, layerCanvas.width, layerCanvas.height);
+        const data = imageData.data;
+        const w = layerCanvas.width;
+        const h = layerCanvas.height;
+
+        const sx = Math.round(startX);
+        const sy = Math.round(startY);
+        if (sx < 0 || sx >= w || sy < 0 || sy >= h) return;
+
+        const idx = (sy * w + sx) * 4;
+        const targetR = data[idx];
+        const targetG = data[idx + 1];
+        const targetB = data[idx + 2];
+        const targetA = data[idx + 3];
+
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = 1;
+        tempCanvas.height = 1;
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCtx.fillStyle = fillColor;
+        tempCtx.fillRect(0, 0, 1, 1);
+        const fillData = tempCtx.getImageData(0, 0, 1, 1).data;
+        const fillR = fillData[0];
+        const fillG = fillData[1];
+        const fillB = fillData[2];
+        const fillA = fillData[3];
+
+        if (targetR === fillR && targetG === fillG && targetB === fillB && targetA === fillA) return;
+
+        const stack = [[sx, sy]];
+        const visited = new Uint8Array(w * h);
+
+        while (stack.length > 0) {
+          const [cx, cy] = stack.pop();
+          const cidx = (cy * w + cx) * 4;
+          if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue;
+          if (visited[cy * w + cx]) continue;
+          if (data[cidx] !== targetR || data[cidx+1] !== targetG || data[cidx+2] !== targetB || data[cidx+3] !== targetA) continue;
+
+          visited[cy * w + cx] = 1;
+          data[cidx] = fillR;
+          data[cidx+1] = fillG;
+          data[cidx+2] = fillB;
+          data[cidx+3] = fillA;
+
+          stack.push([cx+1, cy]);
+          stack.push([cx-1, cy]);
+          stack.push([cx, cy+1]);
+          stack.push([cx, cy-1]);
+        }
+
+        layerCtx.putImageData(imageData, 0, 0);
+      }
+
+      function renderLayersPanel() {
+        layersDropdown.innerHTML = '';
+
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'layer-actions';
+        actionsDiv.innerHTML = `
+          <button id="addLayerDropdownBtn">+ Слой</button>
+          <button id="duplicateLayerDropdownBtn">Копия</button>
+          <button id="mergeDownDropdownBtn">Слить вниз</button>
+        `;
+        layersDropdown.appendChild(actionsDiv);
+
+        layers.forEach((layer, idx) => {
+          const div = document.createElement('div');
+          div.className = 'layer-item' + (idx === activeLayerIndex ? ' active' : '');
+          div.innerHTML = `<span>Слой ${idx+1}</span>`;
+
+          const opacityInput = document.createElement('input');
+          opacityInput.type = 'range';
+          opacityInput.className = 'layer-opacity';
+          opacityInput.min = '0';
+          opacityInput.max = '1';
+          opacityInput.step = '0.05';
+          opacityInput.value = layer.opacity || 1;
+          opacityInput.addEventListener('input', (e) => {
+            e.stopPropagation();
+            layer.opacity = parseFloat(e.target.value);
+            composeAndRender();
+          });
+          div.appendChild(opacityInput);
+
+          const delBtn = document.createElement('button');
+          delBtn.textContent = 'X';
+          delBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (layers.length <= 1) return;
+            layers.splice(idx, 1);
+            if (activeLayerIndex >= layers.length) activeLayerIndex = layers.length - 1;
+            renderLayersPanel();
+            composeAndRender();
+          });
+          div.appendChild(delBtn);
+
+          div.addEventListener('click', () => {
+            activeLayerIndex = idx;
+            renderLayersPanel();
+          });
+          layersDropdown.appendChild(div);
+        });
+      }
+
+      layersDropdown.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        if (btn.id === 'addLayerDropdownBtn') {
+          addLayer();
+          renderLayersPanel();
+        } else if (btn.id === 'duplicateLayerDropdownBtn') {
+          duplicateLayer();
+          renderLayersPanel();
+        } else if (btn.id === 'mergeDownDropdownBtn') {
+          mergeDown();
+          renderLayersPanel();
         }
       });
-      return tempCanvas;
-    }
 
-    function composeAndRender() {
-      canvas.width = container.clientWidth;
-      canvas.height = container.clientHeight;
-      const composite = getCompositeImage();
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.save();
-      ctx.translate(panX, panY);
-      ctx.scale(zoom, zoom);
-      ctx.drawImage(composite, 0, 0);
-      ctx.restore();
-    }
-
-    function downloadImage() {
-      const composite = getCompositeImage();
-      const dataUrl = composite.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.download = 'рисунок_' + new Date().toISOString().slice(0,19).replace(/:/g, '-') + '.png';
-      link.href = dataUrl;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-
-    function floodFill(startX, startY, fillColor) {
-      const layerCanvas = layers[activeLayerIndex].canvas;
-      const layerCtx = layerCanvas.getContext('2d');
-      const imageData = layerCtx.getImageData(0, 0, layerCanvas.width, layerCanvas.height);
-      const data = imageData.data;
-      const w = layerCanvas.width;
-      const h = layerCanvas.height;
-
-      const sx = Math.round(startX);
-      const sy = Math.round(startY);
-      if (sx < 0 || sx >= w || sy < 0 || sy >= h) return;
-
-      const idx = (sy * w + sx) * 4;
-      const targetR = data[idx];
-      const targetG = data[idx + 1];
-      const targetB = data[idx + 2];
-      const targetA = data[idx + 3];
-
-      const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = 1;
-      tempCanvas.height = 1;
-      const tempCtx = tempCanvas.getContext('2d');
-      tempCtx.fillStyle = fillColor;
-      tempCtx.fillRect(0, 0, 1, 1);
-      const fillData = tempCtx.getImageData(0, 0, 1, 1).data;
-      const fillR = fillData[0];
-      const fillG = fillData[1];
-      const fillB = fillData[2];
-      const fillA = fillData[3];
-
-      if (targetR === fillR && targetG === fillG && targetB === fillB && targetA === fillA) return;
-
-      const stack = [[sx, sy]];
-      const visited = new Uint8Array(w * h);
-
-      while (stack.length > 0) {
-        const [cx, cy] = stack.pop();
-        const cidx = (cy * w + cx) * 4;
-        if (cx < 0 || cx >= w || cy < 0 || cy >= h) continue;
-        if (visited[cy * w + cx]) continue;
-        if (data[cidx] !== targetR || data[cidx+1] !== targetG || data[cidx+2] !== targetB || data[cidx+3] !== targetA) continue;
-
-        visited[cy * w + cx] = 1;
-        data[cidx] = fillR;
-        data[cidx+1] = fillG;
-        data[cidx+2] = fillB;
-        data[cidx+3] = fillA;
-
-        stack.push([cx+1, cy]);
-        stack.push([cx-1, cy]);
-        stack.push([cx, cy+1]);
-        stack.push([cx, cy-1]);
+      function addLayer() {
+        const newCanvas = document.createElement('canvas');
+        newCanvas.width = canvasDrawWidth;
+        newCanvas.height = canvasDrawHeight;
+        const newCtx = newCanvas.getContext('2d');
+        newCtx.clearRect(0, 0, newCanvas.width, newCanvas.height);
+        layers.push({ canvas: newCanvas, visible: true, opacity: 1 });
+        activeLayerIndex = layers.length - 1;
+        saveUndoState();
+        composeAndRender();
       }
 
-      layerCtx.putImageData(imageData, 0, 0);
-    }
+      function duplicateLayer() {
+        const source = layers[activeLayerIndex].canvas;
+        const newCanvas = document.createElement('canvas');
+        newCanvas.width = canvasDrawWidth;
+        newCanvas.height = canvasDrawHeight;
+        const newCtx = newCanvas.getContext('2d');
+        newCtx.drawImage(source, 0, 0);
+        layers.push({ canvas: newCanvas, visible: true, opacity: layers[activeLayerIndex].opacity || 1 });
+        activeLayerIndex = layers.length - 1;
+        saveUndoState();
+        composeAndRender();
+      }
 
-    function renderLayersPanel() {
-      layersDropdown.innerHTML = '';
+      function mergeDown() {
+        if (activeLayerIndex <= 0) return;
+        const upperCanvas = layers[activeLayerIndex].canvas;
+        const lowerCanvas = layers[activeLayerIndex - 1].canvas;
+        const lowerCtx = lowerCanvas.getContext('2d');
+        lowerCtx.globalAlpha = layers[activeLayerIndex].opacity || 1;
+        lowerCtx.drawImage(upperCanvas, 0, 0);
+        lowerCtx.globalAlpha = 1;
+        layers.splice(activeLayerIndex, 1);
+        activeLayerIndex = activeLayerIndex - 1;
+        saveUndoState();
+        composeAndRender();
+      }
 
-      const actionsDiv = document.createElement('div');
-      actionsDiv.className = 'layer-actions';
-      actionsDiv.innerHTML = `
-        <button id="addLayerDropdownBtn">+ Слой</button>
-        <button id="duplicateLayerDropdownBtn">Копия</button>
-        <button id="mergeDownDropdownBtn">Слить вниз</button>
-      `;
-      layersDropdown.appendChild(actionsDiv);
-
-      layers.forEach((layer, idx) => {
-        const div = document.createElement('div');
-        div.className = 'layer-item' + (idx === activeLayerIndex ? ' active' : '');
-        div.innerHTML = `<span>Слой ${idx+1}</span>`;
-
-        const opacityInput = document.createElement('input');
-        opacityInput.type = 'range';
-        opacityInput.className = 'layer-opacity';
-        opacityInput.min = '0';
-        opacityInput.max = '1';
-        opacityInput.step = '0.05';
-        opacityInput.value = layer.opacity || 1;
-        opacityInput.addEventListener('input', (e) => {
-          e.stopPropagation();
-          layer.opacity = parseFloat(e.target.value);
+      function newCanvas() {
+        if (confirm('Создать новый холст? Все несохранённые данные будут потеряны.')) {
+          initLayers();
           composeAndRender();
-        });
-        div.appendChild(opacityInput);
+        }
+      }
 
-        const delBtn = document.createElement('button');
-        delBtn.textContent = 'X';
-        delBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          if (layers.length <= 1) return;
-          layers.splice(idx, 1);
-          if (activeLayerIndex >= layers.length) activeLayerIndex = layers.length - 1;
-          renderLayersPanel();
+      function loadImageToLayer(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const newCanvas = document.createElement('canvas');
+            newCanvas.width = canvasDrawWidth;
+            newCanvas.height = canvasDrawHeight;
+            const newCtx = newCanvas.getContext('2d');
+            const scale = Math.min(canvasDrawWidth / img.width, canvasDrawHeight / img.height);
+            const w = img.width * scale;
+            const h = img.height * scale;
+            const x = (canvasDrawWidth - w) / 2;
+            const y = (canvasDrawHeight - h) / 2;
+            newCtx.drawImage(img, x, y, w, h);
+            layers.push({ canvas: newCanvas, visible: true, opacity: 1 });
+            activeLayerIndex = layers.length - 1;
+            saveUndoState();
+            renderLayersPanel();
+            composeAndRender();
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        let clientX, clientY;
+        if (e.touches && e.touches.length > 0) {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        } else if (e.changedTouches && e.changedTouches.length > 0) {
+          clientX = e.changedTouches[0].clientX;
+          clientY = e.changedTouches[0].clientY;
+        } else {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        }
+        const screenX = clientX - rect.left;
+        const screenY = clientY - rect.top;
+        const canvasX = (screenX - panX) / zoom;
+        const canvasY = (screenY - panY) / zoom;
+        return { x: canvasX, y: canvasY };
+      }
+
+      function getColorAtPixel(x, y) {
+        const composite = getCompositeImage();
+        const compCtx = composite.getContext('2d');
+        const px = Math.round(x);
+        const py = Math.round(y);
+        if (px < 0 || px >= canvasDrawWidth || py < 0 || py >= canvasDrawHeight) return null;
+        const pixel = compCtx.getImageData(px, py, 1, 1).data;
+        return `#${pixel[0].toString(16).padStart(2,'0')}${pixel[1].toString(16).padStart(2,'0')}${pixel[2].toString(16).padStart(2,'0')}`;
+      }
+
+      function startDraw(e) {
+        e.preventDefault();
+        if (currentTool === 'fill') {
+          const pos = getPos(e);
+          saveUndoState();
+          floodFill(pos.x, pos.y, currentColor);
           composeAndRender();
-        });
-        div.appendChild(delBtn);
+          return;
+        }
+        if (currentTool === 'eyedropper') {
+          const pos = getPos(e);
+          const color = getColorAtPixel(pos.x, pos.y);
+          if (color) {
+            currentColor = color;
+            colorPicker.value = color;
+          }
+          return;
+        }
+        drawing = true;
+        saveUndoState();
+        const pos = getPos(e);
+        points = [pos];
+        if (currentTool === 'spray') {
+          sprayAtPos(pos);
+        } else {
+          drawDot(pos);
+        }
+      }
 
-        div.addEventListener('click', () => {
-          activeLayerIndex = idx;
-          renderLayersPanel();
+      function draw(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        if (currentTool === 'spray') {
+          sprayAtPos(pos);
+          return;
+        }
+        points.push(pos);
+        if (points.length > 3) points.shift();
+        if (points.length >= 2) {
+          smoothLine(points[points.length - 2], points[points.length - 1]);
+        }
+      }
+
+      function endDraw(e) {
+        if (drawing) {
+          drawing = false;
+          points = [];
+          ctx.beginPath();
+        }
+      }
+
+      function sprayAtPos(pos) {
+        const layerCanvas = layers[activeLayerIndex].canvas;
+        const layerCtx = layerCanvas.getContext('2d');
+        const density = Math.floor(lineWidth * 1.5);
+        layerCtx.fillStyle = currentColor;
+        for (let i = 0; i < density; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const dist = Math.random() * lineWidth;
+          const dx = pos.x + Math.cos(angle) * dist;
+          const dy = pos.y + Math.sin(angle) * dist;
+          layerCtx.fillRect(dx, dy, 1.5, 1.5);
+        }
+        composeAndRender();
+      }
+
+      function drawDot(pos) {
+        const layerCanvas = layers[activeLayerIndex].canvas;
+        const layerCtx = layerCanvas.getContext('2d');
+        layerCtx.beginPath();
+        layerCtx.arc(pos.x, pos.y, lineWidth / 2, 0, Math.PI * 2);
+        layerCtx.fillStyle = (currentTool === 'eraser') ? '#ffffff' : currentColor;
+        layerCtx.fill();
+        composeAndRender();
+      }
+
+      function smoothLine(p1, p2) {
+        const layerCanvas = layers[activeLayerIndex].canvas;
+        const layerCtx = layerCanvas.getContext('2d');
+        layerCtx.beginPath();
+        layerCtx.moveTo(p1.x, p1.y);
+        layerCtx.lineTo(p2.x, p2.y);
+        layerCtx.strokeStyle = (currentTool === 'eraser') ? '#ffffff' : currentColor;
+        layerCtx.lineWidth = (currentTool === 'pencil') ? Math.max(1, lineWidth * 0.5) : lineWidth;
+        layerCtx.lineCap = 'round';
+        layerCtx.lineJoin = 'round';
+        layerCtx.globalCompositeOperation = (currentTool === 'eraser') ? 'destination-out' : globalCompositeOp;
+        layerCtx.stroke();
+
+        if (currentTool === 'neon') {
+          layerCtx.save();
+          layerCtx.globalCompositeOperation = 'lighter';
+          layerCtx.strokeStyle = currentColor;
+          layerCtx.lineWidth = lineWidth * 0.4;
+          layerCtx.shadowColor = currentColor;
+          layerCtx.shadowBlur = 12;
+          layerCtx.stroke();
+          layerCtx.restore();
+        }
+        composeAndRender();
+      }
+
+      function updateZoom() {
+        zoomLevelSpan.textContent = Math.round(zoom * 100) + '%';
+        composeAndRender();
+      }
+
+      function setActiveTool(tool) {
+        currentTool = tool;
+        [brushBtn, neonBrushBtn, pencilBtn, sprayBtn, eraserBtn, fillBtn, eyedropperBtn].forEach(btn => {
+          btn.classList.remove('active-tool');
         });
-        layersDropdown.appendChild(div);
+        const btnMap = {
+          brush: brushBtn, neon: neonBrushBtn, pencil: pencilBtn,
+          spray: sprayBtn, eraser: eraserBtn, fill: fillBtn, eyedropper: eyedropperBtn
+        };
+        if (btnMap[tool]) btnMap[tool].classList.add('active-tool');
+        canvas.style.cursor = (tool === 'eraser') ? 'cell' : 'crosshair';
+      }
+
+      document.addEventListener('click', (e) => {
+        if (!layersWrapper.contains(e.target)) {
+          layersDropdown.classList.remove('show');
+        }
       });
-    }
 
-    layersDropdown.addEventListener('click', (e) => {
-      const btn = e.target.closest('button');
-      if (!btn) return;
-      if (btn.id === 'addLayerDropdownBtn') {
-        addLayer();
-        renderLayersPanel();
-      } else if (btn.id === 'duplicateLayerDropdownBtn') {
-        duplicateLayer();
-        renderLayersPanel();
-      } else if (btn.id === 'mergeDownDropdownBtn') {
-        mergeDown();
-        renderLayersPanel();
-      }
-    });
+      layersToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        layersDropdown.classList.toggle('show');
+      });
 
-    function addLayer() {
-      const newCanvas = document.createElement('canvas');
-      newCanvas.width = canvasDrawWidth;
-      newCanvas.height = canvasDrawHeight;
-      const newCtx = newCanvas.getContext('2d');
-      newCtx.clearRect(0, 0, newCanvas.width, newCanvas.height);
-      layers.push({ canvas: newCanvas, visible: true, opacity: 1 });
-      activeLayerIndex = layers.length - 1;
-      saveUndoState();
-      composeAndRender();
-    }
-
-    function duplicateLayer() {
-      const source = layers[activeLayerIndex].canvas;
-      const newCanvas = document.createElement('canvas');
-      newCanvas.width = canvasDrawWidth;
-      newCanvas.height = canvasDrawHeight;
-      const newCtx = newCanvas.getContext('2d');
-      newCtx.drawImage(source, 0, 0);
-      layers.push({ canvas: newCanvas, visible: true, opacity: layers[activeLayerIndex].opacity || 1 });
-      activeLayerIndex = layers.length - 1;
-      saveUndoState();
-      composeAndRender();
-    }
-
-    function mergeDown() {
-      if (activeLayerIndex <= 0) return;
-      const upperCanvas = layers[activeLayerIndex].canvas;
-      const lowerCanvas = layers[activeLayerIndex - 1].canvas;
-      const lowerCtx = lowerCanvas.getContext('2d');
-      lowerCtx.globalAlpha = layers[activeLayerIndex].opacity || 1;
-      lowerCtx.drawImage(upperCanvas, 0, 0);
-      lowerCtx.globalAlpha = 1;
-      layers.splice(activeLayerIndex, 1);
-      activeLayerIndex = activeLayerIndex - 1;
-      saveUndoState();
-      composeAndRender();
-    }
-
-    function newCanvas() {
-      if (confirm('Создать новый холст? Все несохранённые данные будут потеряны.')) {
+      document.getElementById('startBtn').addEventListener('click', () => {
+        launcher.classList.add('hidden');
+        app.classList.add('active');
         initLayers();
         composeAndRender();
-      }
-    }
-
-    function loadImageToLayer(file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          const newCanvas = document.createElement('canvas');
-          newCanvas.width = canvasDrawWidth;
-          newCanvas.height = canvasDrawHeight;
-          const newCtx = newCanvas.getContext('2d');
-          const scale = Math.min(canvasDrawWidth / img.width, canvasDrawHeight / img.height);
-          const w = img.width * scale;
-          const h = img.height * scale;
-          const x = (canvasDrawWidth - w) / 2;
-          const y = (canvasDrawHeight - h) / 2;
-          newCtx.drawImage(img, x, y, w, h);
-          layers.push({ canvas: newCanvas, visible: true, opacity: 1 });
-          activeLayerIndex = layers.length - 1;
-          saveUndoState();
-          renderLayersPanel();
-          composeAndRender();
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function getPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      let clientX, clientY;
-      if (e.touches && e.touches.length > 0) {
-        clientX = e.touches[0].clientX;
-        clientY = e.touches[0].clientY;
-      } else if (e.changedTouches && e.changedTouches.length > 0) {
-        clientX = e.changedTouches[0].clientX;
-        clientY = e.changedTouches[0].clientY;
-      } else {
-        clientX = e.clientX;
-        clientY = e.clientY;
-      }
-      const screenX = clientX - rect.left;
-      const screenY = clientY - rect.top;
-      const canvasX = (screenX - panX) / zoom;
-      const canvasY = (screenY - panY) / zoom;
-      return { x: canvasX, y: canvasY };
-    }
-
-    function getColorAtPixel(x, y) {
-      const composite = getCompositeImage();
-      const compCtx = composite.getContext('2d');
-      const px = Math.round(x);
-      const py = Math.round(y);
-      if (px < 0 || px >= canvasDrawWidth || py < 0 || py >= canvasDrawHeight) return null;
-      const pixel = compCtx.getImageData(px, py, 1, 1).data;
-      return `#${pixel[0].toString(16).padStart(2,'0')}${pixel[1].toString(16).padStart(2,'0')}${pixel[2].toString(16).padStart(2,'0')}`;
-    }
-
-    function startDraw(e) {
-      e.preventDefault();
-      if (currentTool === 'fill') {
-        const pos = getPos(e);
-        saveUndoState();
-        floodFill(pos.x, pos.y, currentColor);
-        composeAndRender();
-        return;
-      }
-      if (currentTool === 'eyedropper') {
-        const pos = getPos(e);
-        const color = getColorAtPixel(pos.x, pos.y);
-        if (color) {
-          currentColor = color;
-          colorPicker.value = color;
-        }
-        return;
-      }
-      drawing = true;
-      saveUndoState();
-      const pos = getPos(e);
-      points = [pos];
-      if (currentTool === 'spray') {
-        sprayAtPos(pos);
-      } else {
-        drawDot(pos);
-      }
-    }
-
-    function draw(e) {
-      if (!drawing) return;
-      e.preventDefault();
-      const pos = getPos(e);
-      if (currentTool === 'spray') {
-        sprayAtPos(pos);
-        return;
-      }
-      points.push(pos);
-      if (points.length > 3) points.shift();
-      if (points.length >= 2) {
-        smoothLine(points[points.length - 2], points[points.length - 1]);
-      }
-    }
-
-    function endDraw(e) {
-      if (drawing) {
-        drawing = false;
-        points = [];
-        ctx.beginPath();
-      }
-    }
-
-    function sprayAtPos(pos) {
-      const layerCanvas = layers[activeLayerIndex].canvas;
-      const layerCtx = layerCanvas.getContext('2d');
-      const density = Math.floor(lineWidth * 1.5);
-      layerCtx.fillStyle = currentColor;
-      for (let i = 0; i < density; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const dist = Math.random() * lineWidth;
-        const dx = pos.x + Math.cos(angle) * dist;
-        const dy = pos.y + Math.sin(angle) * dist;
-        layerCtx.fillRect(dx, dy, 1.5, 1.5);
-      }
-      composeAndRender();
-    }
-
-    function drawDot(pos) {
-      const layerCanvas = layers[activeLayerIndex].canvas;
-      const layerCtx = layerCanvas.getContext('2d');
-      layerCtx.beginPath();
-      layerCtx.arc(pos.x, pos.y, lineWidth / 2, 0, Math.PI * 2);
-      layerCtx.fillStyle = (currentTool === 'eraser') ? '#ffffff' : currentColor;
-      layerCtx.fill();
-      composeAndRender();
-    }
-
-    function smoothLine(p1, p2) {
-      const layerCanvas = layers[activeLayerIndex].canvas;
-      const layerCtx = layerCanvas.getContext('2d');
-      layerCtx.beginPath();
-      layerCtx.moveTo(p1.x, p1.y);
-      layerCtx.lineTo(p2.x, p2.y);
-      layerCtx.strokeStyle = (currentTool === 'eraser') ? '#ffffff' : currentColor;
-      layerCtx.lineWidth = (currentTool === 'pencil') ? Math.max(1, lineWidth * 0.5) : lineWidth;
-      layerCtx.lineCap = 'round';
-      layerCtx.lineJoin = 'round';
-      layerCtx.globalCompositeOperation = (currentTool === 'eraser') ? 'destination-out' : globalCompositeOp;
-      layerCtx.stroke();
-
-      if (currentTool === 'neon') {
-        layerCtx.save();
-        layerCtx.globalCompositeOperation = 'lighter';
-        layerCtx.strokeStyle = currentColor;
-        layerCtx.lineWidth = lineWidth * 0.4;
-        layerCtx.shadowColor = currentColor;
-        layerCtx.shadowBlur = 10;
-        layerCtx.stroke();
-        layerCtx.restore();
-      }
-      composeAndRender();
-    }
-
-    function updateZoom() {
-      zoomLevelSpan.textContent = Math.round(zoom * 100) + '%';
-      composeAndRender();
-    }
-
-    function setActiveTool(tool) {
-      currentTool = tool;
-      [brushBtn, neonBrushBtn, pencilBtn, sprayBtn, eraserBtn, fillBtn, eyedropperBtn].forEach(btn => {
-        btn.classList.remove('active-tool');
       });
-      const btnMap = {
-        brush: brushBtn, neon: neonBrushBtn, pencil: pencilBtn,
-        spray: sprayBtn, eraser: eraserBtn, fill: fillBtn, eyedropper: eyedropperBtn
-      };
-      if (btnMap[tool]) btnMap[tool].classList.add('active-tool');
-      canvas.style.cursor = (tool === 'eraser') ? 'cell' : 'crosshair';
-    }
 
-    // Закрытие выпадающего списка слоёв при клике вне
-    document.addEventListener('click', (e) => {
-      if (!layersWrapper.contains(e.target)) {
-        layersDropdown.classList.remove('show');
-      }
-    });
+      brushBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('brush'); });
+      neonBrushBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('neon'); });
+      pencilBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('pencil'); });
+      sprayBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('spray'); });
+      eraserBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('eraser'); });
+      fillBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('fill'); });
+      eyedropperBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('eyedropper'); });
 
-    layersToggleBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      layersDropdown.classList.toggle('show');
-    });
+      undoBtn.addEventListener('click', (e) => { e.preventDefault(); undo(); });
+      redoBtn.addEventListener('click', (e) => { e.preventDefault(); redo(); });
+      colorPicker.addEventListener('input', (e) => currentColor = e.target.value);
+      sizeSlider.addEventListener('input', (e) => {
+        lineWidth = parseInt(e.target.value);
+        sizeValue.textContent = lineWidth + 'px';
+      });
+      blendSelect.addEventListener('change', (e) => globalCompositeOp = e.target.value);
+      downloadBtn.addEventListener('click', (e) => { e.preventDefault(); downloadImage(); });
+      newCanvasBtn.addEventListener('click', (e) => { e.preventDefault(); newCanvas(); });
+      loadImageBtn.addEventListener('click', (e) => { e.preventDefault(); imageLoader.click(); });
+      imageLoader.addEventListener('change', (e) => {
+        if (e.target.files[0]) loadImageToLayer(e.target.files[0]);
+        imageLoader.value = '';
+      });
 
-    document.getElementById('startBtn').addEventListener('click', () => {
-      launcher.classList.add('hidden');
-      app.classList.add('active');
-      initLayers();
-      initColorPalette();
-      composeAndRender();
-    });
+      zoomInBtn.addEventListener('click', (e) => { e.preventDefault(); zoom = Math.min(zoom * 1.2, 5); updateZoom(); });
+      zoomOutBtn.addEventListener('click', (e) => { e.preventDefault(); zoom = Math.max(zoom / 1.2, 0.2); updateZoom(); });
+      zoomResetBtn.addEventListener('click', (e) => { e.preventDefault(); zoom = 1; panX = 0; panY = 0; updateZoom(); });
 
-    brushBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('brush'); });
-    neonBrushBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('neon'); });
-    pencilBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('pencil'); });
-    sprayBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('spray'); });
-    eraserBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('eraser'); });
-    fillBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('fill'); });
-    eyedropperBtn.addEventListener('click', (e) => { e.preventDefault(); setActiveTool('eyedropper'); });
+      canvas.addEventListener('mousedown', startDraw);
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', endDraw);
+      canvas.addEventListener('mouseleave', endDraw);
+      canvas.addEventListener('touchstart', startDraw, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', endDraw);
+      canvas.addEventListener('touchcancel', endDraw);
 
-    undoBtn.addEventListener('click', (e) => { e.preventDefault(); undo(); });
-    redoBtn.addEventListener('click', (e) => { e.preventDefault(); redo(); });
-    colorPicker.addEventListener('input', (e) => currentColor = e.target.value);
-    sizeSlider.addEventListener('input', (e) => {
-      lineWidth = parseInt(e.target.value);
-      sizeValue.textContent = lineWidth + 'px';
-    });
-    blendSelect.addEventListener('change', (e) => globalCompositeOp = e.target.value);
-    downloadBtn.addEventListener('click', (e) => { e.preventDefault(); downloadImage(); });
-    newCanvasBtn.addEventListener('click', (e) => { e.preventDefault(); newCanvas(); });
-    loadImageBtn.addEventListener('click', (e) => { e.preventDefault(); imageLoader.click(); });
-    imageLoader.addEventListener('change', (e) => {
-      if (e.target.files[0]) loadImageToLayer(e.target.files[0]);
-      imageLoader.value = '';
-    });
+      window.addEventListener('resize', composeAndRender);
 
-    zoomInBtn.addEventListener('click', (e) => { e.preventDefault(); zoom = Math.min(zoom * 1.2, 5); updateZoom(); });
-    zoomOutBtn.addEventListener('click', (e) => { e.preventDefault(); zoom = Math.max(zoom / 1.2, 0.2); updateZoom(); });
-    zoomResetBtn.addEventListener('click', (e) => { e.preventDefault(); zoom = 1; panX = 0; panY = 0; updateZoom(); });
-
-    canvas.addEventListener('mousedown', startDraw);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', endDraw);
-    canvas.addEventListener('mouseleave', endDraw);
-    canvas.addEventListener('touchstart', startDraw, { passive: false });
-    canvas.addEventListener('touchmove', draw, { passive: false });
-    canvas.addEventListener('touchend', endDraw);
-    canvas.addEventListener('touchcancel', endDraw);
-
-    window.addEventListener('resize', composeAndRender);
-
-    document.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
-      if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
-      if (e.ctrlKey && e.key === 's') { e.preventDefault(); downloadImage(); }
-    });
-  })();
-</script>
+      document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'z') { e.preventDefault(); undo(); }
+        if (e.ctrlKey && e.key === 'y') { e.preventDefault(); redo(); }
+        if (e.ctrlKey && e.key === 's') { e.preventDefault(); downloadImage(); }
+      });
+    })();
+  </script>
 </body>
 </html>
