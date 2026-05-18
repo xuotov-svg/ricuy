@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Рисовалка</title>
-  
+
   <!-- iOS мета-теги для иконки на домашнем экране -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -102,19 +102,13 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      padding: 8px 10px;
+      padding: 6px 8px;
       background: rgba(15, 16, 25, 0.95);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid #2e2e4a;
       align-items: center;
       z-index: 20;
-      min-height: 48px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .toolbar::-webkit-scrollbar {
-      display: none;
+      min-height: auto;
     }
     .tool-group {
       display: flex;
@@ -123,14 +117,14 @@
       background: #1e1f2e;
       padding: 3px 6px;
       border-radius: 30px;
-      flex-shrink: 0;
+      flex-wrap: wrap;
     }
     button, select, input {
       background: transparent;
       border: none;
       color: #cdd6f4;
-      font-size: 0.8rem;
-      padding: 6px 10px;
+      font-size: 0.75rem;
+      padding: 6px 9px;
       border-radius: 30px;
       cursor: pointer;
       display: flex;
@@ -139,7 +133,7 @@
       transition: 0.2s;
       font-weight: 500;
       white-space: nowrap;
-      min-height: 36px;
+      min-height: 34px;
       -webkit-appearance: none;
     }
     button:active, select:active {
@@ -148,12 +142,12 @@
     }
     .active-tool {
       background: #7b2fff !important;
-      box-shadow: 0 0 14px #7b2fffcc;
+      box-shadow: 0 0 12px #7b2fffcc;
       color: white;
     }
     input[type="color"] {
-      width: 36px;
-      height: 32px;
+      width: 32px;
+      height: 30px;
       padding: 2px;
       border-radius: 20px;
       background: #27283c;
@@ -161,7 +155,7 @@
       min-height: auto;
     }
     input[type="range"] {
-      width: 60px;
+      width: 55px;
       accent-color: #c084fc;
       padding: 0;
       min-height: auto;
@@ -182,23 +176,70 @@
       image-rendering: auto;
       touch-action: none;
     }
-    .layers-panel {
+    .color-palette {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .preset-color {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: 0.2s;
+      flex-shrink: 0;
+    }
+    .preset-color:active {
+      border-color: white;
+      transform: scale(1.15);
+    }
+    .zoom-info {
+      color: #9aa5ce;
+      font-size: 0.75rem;
+      margin: 0 4px;
+    }
+    .layers-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .layers-dropdown {
       position: absolute;
-      right: 8px;
-      top: 60px;
-      background: rgba(20, 21, 35, 0.92);
-      backdrop-filter: blur(12px);
+      top: 100%;
+      right: 0;
+      margin-top: 6px;
+      background: rgba(20, 21, 35, 0.96);
+      backdrop-filter: blur(16px);
       border: 1px solid #3a3b5c;
       border-radius: 16px;
       padding: 8px;
-      display: flex;
+      display: none;
       flex-direction: column;
-      gap: 5px;
-      z-index: 30;
-      min-width: 160px;
-      max-height: 45vh;
+      gap: 6px;
+      z-index: 50;
+      min-width: 180px;
+      max-height: 260px;
       overflow-y: auto;
-      font-size: 0.8rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    }
+    .layers-dropdown.show {
+      display: flex;
+    }
+    .layer-actions {
+      display: flex;
+      gap: 4px;
+      justify-content: space-between;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #3a3b5c;
+    }
+    .layer-actions button {
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      min-height: auto;
+      background: #2a2b40;
+      border-radius: 20px;
+      flex: 1;
     }
     .layer-item {
       display: flex;
@@ -227,51 +268,6 @@
       width: 50px;
       accent-color: #7b2fff;
     }
-    .zoom-info {
-      color: #9aa5ce;
-      font-size: 0.75rem;
-      margin-left: 6px;
-    }
-    .color-palette {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .preset-color {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: 0.2s;
-      flex-shrink: 0;
-    }
-    .preset-color:active {
-      border-color: white;
-      transform: scale(1.15);
-    }
-    
-    @media (max-width: 600px) {
-      .tool-group {
-        padding: 2px 4px;
-        gap: 1px;
-      }
-      button, select {
-        font-size: 0.7rem;
-        padding: 5px 8px;
-        min-height: 32px;
-      }
-      input[type="range"] {
-        width: 45px;
-      }
-      .layers-panel {
-        right: 4px;
-        top: 55px;
-        min-width: 140px;
-        max-height: 40vh;
-      }
-    }
   </style>
 </head>
 <body>
@@ -286,7 +282,7 @@
       <button id="brushBtn" class="active-tool">Кисть</button>
       <button id="neonBrushBtn">Неон</button>
       <button id="pencilBtn">Карандаш</button>
-      <button id="sprayBtn">Распылитель</button>
+      <button id="sprayBtn">Распыл.</button>
       <button id="eraserBtn">Ластик</button>
       <button id="fillBtn">Заливка</button>
       <button id="eyedropperBtn">Пипетка</button>
@@ -309,28 +305,24 @@
       </select>
       <button id="undoBtn">↩</button>
       <button id="redoBtn">↪</button>
-    </div>
-    <div class="tool-group">
-      <button id="addLayerBtn">+ Слой</button>
-      <button id="duplicateLayerBtn">Копия</button>
-      <button id="mergeDownBtn">Слить</button>
+      <div class="layers-wrapper">
+        <button id="layersToggleBtn">📑 Слои</button>
+        <div class="layers-dropdown" id="layersDropdown"></div>
+      </div>
     </div>
     <div class="tool-group">
       <button id="zoomInBtn">+</button>
       <span class="zoom-info" id="zoomLevel">100%</span>
       <button id="zoomOutBtn">-</button>
       <button id="zoomResetBtn">Сброс</button>
-    </div>
-    <div class="tool-group">
-      <button id="downloadBtn">Скачать</button>
-      <button id="loadImageBtn">Загрузить</button>
-      <button id="newCanvasBtn">Новый</button>
+      <button id="downloadBtn">💾</button>
+      <button id="loadImageBtn">📷</button>
+      <button id="newCanvasBtn">🆕</button>
     </div>
   </div>
   <div class="canvas-container" id="canvasContainer">
     <canvas id="canvas"></canvas>
   </div>
-  <div class="layers-panel" id="layersPanel"></div>
 </div>
 
 <input type="file" id="imageLoader" accept="image/*" style="display:none;">
@@ -380,10 +372,9 @@
     const sizeSlider = document.getElementById('sizeSlider');
     const sizeValue = document.getElementById('sizeValue');
     const blendSelect = document.getElementById('blendMode');
-    const addLayerBtn = document.getElementById('addLayerBtn');
-    const duplicateLayerBtn = document.getElementById('duplicateLayerBtn');
-    const mergeDownBtn = document.getElementById('mergeDownBtn');
-    const layersPanel = document.getElementById('layersPanel');
+    const layersToggleBtn = document.getElementById('layersToggleBtn');
+    const layersDropdown = document.getElementById('layersDropdown');
+    const layersWrapper = document.querySelector('.layers-wrapper');
     const downloadBtn = document.getElementById('downloadBtn');
     const loadImageBtn = document.getElementById('loadImageBtn');
     const imageLoader = document.getElementById('imageLoader');
@@ -577,7 +568,17 @@
     }
 
     function renderLayersPanel() {
-      layersPanel.innerHTML = '';
+      layersDropdown.innerHTML = '';
+
+      const actionsDiv = document.createElement('div');
+      actionsDiv.className = 'layer-actions';
+      actionsDiv.innerHTML = `
+        <button id="addLayerDropdownBtn">+ Слой</button>
+        <button id="duplicateLayerDropdownBtn">Копия</button>
+        <button id="mergeDownDropdownBtn">Слить вниз</button>
+      `;
+      layersDropdown.appendChild(actionsDiv);
+
       layers.forEach((layer, idx) => {
         const div = document.createElement('div');
         div.className = 'layer-item' + (idx === activeLayerIndex ? ' active' : '');
@@ -613,9 +614,24 @@
           activeLayerIndex = idx;
           renderLayersPanel();
         });
-        layersPanel.appendChild(div);
+        layersDropdown.appendChild(div);
       });
     }
+
+    layersDropdown.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      if (btn.id === 'addLayerDropdownBtn') {
+        addLayer();
+        renderLayersPanel();
+      } else if (btn.id === 'duplicateLayerDropdownBtn') {
+        duplicateLayer();
+        renderLayersPanel();
+      } else if (btn.id === 'mergeDownDropdownBtn') {
+        mergeDown();
+        renderLayersPanel();
+      }
+    });
 
     function addLayer() {
       const newCanvas = document.createElement('canvas');
@@ -626,7 +642,6 @@
       layers.push({ canvas: newCanvas, visible: true, opacity: 1 });
       activeLayerIndex = layers.length - 1;
       saveUndoState();
-      renderLayersPanel();
       composeAndRender();
     }
 
@@ -640,7 +655,6 @@
       layers.push({ canvas: newCanvas, visible: true, opacity: layers[activeLayerIndex].opacity || 1 });
       activeLayerIndex = layers.length - 1;
       saveUndoState();
-      renderLayersPanel();
       composeAndRender();
     }
 
@@ -655,7 +669,6 @@
       layers.splice(activeLayerIndex, 1);
       activeLayerIndex = activeLayerIndex - 1;
       saveUndoState();
-      renderLayersPanel();
       composeAndRender();
     }
 
@@ -840,15 +853,20 @@
         spray: sprayBtn, eraser: eraserBtn, fill: fillBtn, eyedropper: eyedropperBtn
       };
       if (btnMap[tool]) btnMap[tool].classList.add('active-tool');
-
-      if (tool === 'eyedropper' || tool === 'fill') {
-        canvas.style.cursor = 'crosshair';
-      } else if (tool === 'eraser') {
-        canvas.style.cursor = 'cell';
-      } else {
-        canvas.style.cursor = 'crosshair';
-      }
+      canvas.style.cursor = (tool === 'eraser') ? 'cell' : 'crosshair';
     }
+
+    // Закрытие выпадающего списка слоёв при клике вне
+    document.addEventListener('click', (e) => {
+      if (!layersWrapper.contains(e.target)) {
+        layersDropdown.classList.remove('show');
+      }
+    });
+
+    layersToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      layersDropdown.classList.toggle('show');
+    });
 
     document.getElementById('startBtn').addEventListener('click', () => {
       launcher.classList.add('hidden');
@@ -874,9 +892,6 @@
       sizeValue.textContent = lineWidth + 'px';
     });
     blendSelect.addEventListener('change', (e) => globalCompositeOp = e.target.value);
-    addLayerBtn.addEventListener('click', (e) => { e.preventDefault(); addLayer(); });
-    duplicateLayerBtn.addEventListener('click', (e) => { e.preventDefault(); duplicateLayer(); });
-    mergeDownBtn.addEventListener('click', (e) => { e.preventDefault(); mergeDown(); });
     downloadBtn.addEventListener('click', (e) => { e.preventDefault(); downloadImage(); });
     newCanvasBtn.addEventListener('click', (e) => { e.preventDefault(); newCanvas(); });
     loadImageBtn.addEventListener('click', (e) => { e.preventDefault(); imageLoader.click(); });
