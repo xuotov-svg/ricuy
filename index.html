@@ -883,8 +883,8 @@
       let symmetryAxis = 'x';
       let gradientBrush = false;
       let selecting = false;
-      let selection = null; // {x,y,w,h}
-      let selectionData = null; // временный канвас для перемещения выделения
+      let selection = null;
+      let selectionData = null;
       let selectionMoving = false;
       let selectionMoveStart = null;
       let selectionOffset = {x:0,y:0};
@@ -941,7 +941,6 @@
       const redoBtn = document.getElementById('redoBtn');
       const homeBtn = document.getElementById('homeBtn');
 
-      // Layer initialization
       function initLayers() {
         const baseCanvas = document.createElement('canvas');
         baseCanvas.width = canvasDrawWidth;
@@ -1493,10 +1492,10 @@
           applySymmetry(pos.x, pos.y, (x,y) => blurAt(x, y, lineWidth));
           composeAndRender();
         } else {
-  applySymmetry(pos.x, pos.y, (x,y) => drawDot({x,y}));
-  composeAndRender();
-}
+          applySymmetry(pos.x, pos.y, (x,y) => drawDot({x,y}));
+          composeAndRender();
         }
+      }
 
       function draw(e) {
         if (!drawing && !(currentTool==='select' && selectionMoving)) return;
@@ -1600,6 +1599,7 @@
           applySymmetry(p1.x, p1.y, (x1,y1) => {
             applySymmetry(p2.x, p2.y, (x2,y2) => smoothLine({x:x1,y:y1}, {x:x2,y:y2}));
           });
+          composeAndRender();
         }
       }
 
